@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/WelcomeMessage"
+            android:layout_width="301dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:layout_marginTop="80dp"
+            android:text="Welcome to Roommate Connect!"
+            android:background="#0000ff"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/LoginButton"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Click Here to Login "
+            android:textColor="#0000ff" />
+
+        <Button
+            android:id="@+id/CreateAccountButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Click Here to Create Account"
+            android:textColor="#0000ff" />
+
+    </LinearLayout>
+
+</RelativeLayout>

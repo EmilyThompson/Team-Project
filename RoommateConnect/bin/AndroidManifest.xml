@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.roommateconnect"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="21" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".LoginPage"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".CreateAccount"
+            android:label="@string/title_activity_create_account" >
+        </activity>
+        <activity
+            android:name=".Welcome"
+            android:label="@string/title_activity_welcome" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Matches"
+            android:label="@string/title_activity_get_started" >
+        </activity>
+        <activity
+            android:name=".AccountInformation"
+            android:label="@string/title_activity_account_information" >
+        </activity>
+        <activity
+            android:name=".AccountHome"
+            android:label="@string/title_activity_account_home" >
+        </activity>
+    </application>
+
+</manifest>
