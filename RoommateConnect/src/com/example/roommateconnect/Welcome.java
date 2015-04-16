@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Welcome extends Activity implements OnClickListener {
 	
+	private LinearLayout Linear;
 	private Button LoginButton;
 	private Button CreateAccountButton;
 	private static final String tag = "Welcome page";
@@ -29,7 +30,6 @@ public class Welcome extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_welcome);
 		
 		Linear = (LinearLayout) findViewById(R.id.linearLayout);
-		Toast.makeText(getApplicationContext(), "Creating Table", Toast.LENGTH_SHORT).show();
 		
 		LoginButton = (Button) findViewById(R.id.LoginButton);
 		LoginButton.setOnClickListener(this);

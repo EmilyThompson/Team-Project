@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -21,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AccountInformation extends Activity implements OnClickListener,
-		OnItemSelectedListener {
+		OnItemSelectedListener, OnCheckedChangeListener {
 
 	// Create Database References
 	SQLiteDatabase db;
@@ -74,9 +76,12 @@ public class AccountInformation extends Activity implements OnClickListener,
 		classCode = (TextView) findViewById(R.id.classLevel);
 		lookingFor = (TextView) findViewById(R.id.LookingFor);
 		lookingForMenu = (Spinner) findViewById(R.id.EnterLookingFor);
-		quantity = (EditText) findViewById(R.id.GroupAmount);
+		quantity = (EditText) findViewById(R.id.EnterGroupAmount);
 		RadioButton f = (RadioButton) findViewById(R.id.Female);
+		f.setOnCheckedChangeListener(this);
 		RadioButton m = (RadioButton) findViewById(R.id.Male);
+		m.setOnCheckedChangeListener(this);
+		
 
 		registerForContextMenu(classMenu);
 		classMenu.setOnItemSelectedListener(this);
@@ -94,19 +99,21 @@ public class AccountInformation extends Activity implements OnClickListener,
 		mm.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		lookingForMenu.setAdapter(mm);
 
-		createTable();
-
-	}
-
-	public void onCheckedChangedListener(RadioGroup group, int checkedId) {
-		switch (group.getId()) {
-		case R.id.Female:
-			SEX = "Female";
-			break;
-		case R.id.Male:
-			SEX = "Male";
-			break;
+	//	db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
+	//	db.execSQL("DROP TABLE IF EXISTS MY_TABLE");
+	//	Toast.makeText(getApplicationContext(), "Table dropped", Toast.LENGTH_SHORT).show();
 		}
+	
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+	switch (buttonView.getId()){
+	case R.id.Female:
+		SEX = "Female";
+		break;
+	case R.id.Male:
+		SEX = "Male";
+		break;
+	}
 	}
 
 	@Override
@@ -131,13 +138,14 @@ public class AccountInformation extends Activity implements OnClickListener,
 		case R.id.saveSettings:
 			Toast.makeText(getApplicationContext(), "Account settings saved!",
 					Toast.LENGTH_SHORT).show();
-			FIRSTNAME = firstname.getText().toString();
+		/*	FIRSTNAME = firstname.getText().toString();
 			LASTNAME = lastname.getText().toString();
 			EMAIL = email.getText().toString();
 			PASSWORD = password.getText().toString();
 			STRING_QUANTITY = quantity.getText().toString();
-			QUANTITY = Integer.parseInt(STRING_QUANTITY);
+			QUANTITY = Integer.parseInt(STRING_QUANTITY);*/
 			insertIntoTable();
+			Toast.makeText(getApplicationContext(), "Data added to database", Toast.LENGTH_SHORT).show();
 			Intent s = new Intent(AccountInformation.this, AccountHome.class);
 			startActivity(s);
 			break;
@@ -152,6 +160,18 @@ public class AccountInformation extends Activity implements OnClickListener,
 	}
 
 	// Create Table if it doesn't exist
+	public void deleteTable() {
+		try {
+			db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
+			db.execSQL("DROP MY_TABLE");
+			Toast.makeText(getApplicationContext(), Table + "has been deleted", Toast.LENGTH_LONG).show();
+			db.close();
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), "Error in creating table",
+					Toast.LENGTH_LONG);
+		}
+	}
+	
 	public void createTable() {
 		try {
 			db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
@@ -169,14 +189,19 @@ public class AccountInformation extends Activity implements OnClickListener,
 		try {
 			db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
 			ContentValues values = new ContentValues();
-			values.put("First Name", FIRSTNAME);
-			values.put("Last Name", LASTNAME);
-			values.put("Email", EMAIL);
-			values.put("Password", PASSWORD);
-			values.put("Sex", SEX);
-			values.put("Class Level", CLASSYEAR);
-			values.put("Looking for", LOOKINGFOR);
-			values.put("Group Amount", QUANTITY);
+			values.put("First Name", firstname.getText().toString());
+			values.put("Last Name", lastname.getText().toString());
+			values.put("Email", email.getText().toString());
+			values.put("Password", password.getText().toString());
+			if (SEX.equals("Female")){
+			values.put("Sex", "Female");
+		}
+			else if (SEX.equals("Male")){
+				values.put("Sex", "Male");
+			}
+			values.put("Class Level", classCode.getText().toString());
+			values.put("Looking for", lookingFor.getText().toString());
+			values.put("Group Amount", quantity.getText().toString());
 			db.insert("Account", null, values);
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(),
