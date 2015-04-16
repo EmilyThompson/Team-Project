@@ -9,9 +9,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_marginTop="80dp" >
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/UsernameALP"
@@ -33,8 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:text="Password" 
-            android:textColor="#0000ff"/>
+            android:text="Password"
+            android:textColor="#0000ff" />
 
         <EditText
             android:id="@+id/EnterPasswordLP"
@@ -48,8 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Login"
             android:background="#0000ff"
+            android:text="Login"
             android:textColor="#ffffff"
             android:textStyle="bold" />
     </LinearLayout>

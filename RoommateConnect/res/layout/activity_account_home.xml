@@ -4,42 +4,42 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-            <TextView
-                android:id="@+id/WelcomeBack"
-                android:layout_width="301dp"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
-                android:background="#0000ff"
-                android:ems="10"
-                android:gravity="center"
-                android:text="Welcome Back Roommate Connect!"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+    <TextView
+        android:id="@+id/WelcomeBack"
+        android:layout_width="301dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:background="#0000ff"
+        android:ems="10"
+        android:gravity="center"
+        android:text="Welcome Back Roommate Connect!"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/accountSettings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/WelcomeBack"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="42dp"
-                android:text="Account Settings"
-                android:textColor="#0000ff"
-                android:gravity="center" />
+    <Button
+        android:id="@+id/accountSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/WelcomeBack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:gravity="center"
+        android:text="Account Settings"
+        android:textColor="#0000ff" />
 
-			<Button
-			    android:id="@+id/myMatches"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_alignLeft="@+id/accountSettings"
-			    android:layout_alignRight="@+id/accountSettings"
-			    android:layout_below="@+id/accountSettings"
-			    android:layout_marginTop="16dp"
-			    android:gravity="center"
-			    android:text="My Matches"
-			    android:textColor="#0000ff" />
+    <Button
+        android:id="@+id/myMatches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/accountSettings"
+        android:layout_alignRight="@+id/accountSettings"
+        android:layout_below="@+id/accountSettings"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="My Matches"
+        android:textColor="#0000ff" />
 
 </RelativeLayout>

@@ -5,6 +5,7 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -16,14 +17,14 @@
             android:id="@+id/WelcomeMessage"
             android:layout_width="301dp"
             android:layout_height="50dp"
-            android:ems="10"
             android:layout_marginTop="80dp"
-            android:text="Welcome to Roommate Connect!"
             android:background="#0000ff"
+            android:ems="10"
+            android:gravity="center"
+            android:text="Welcome to Roommate Connect!"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/LoginButton"
@@ -40,7 +41,6 @@
             android:layout_marginTop="20dp"
             android:text="Click Here to Create Account"
             android:textColor="#0000ff" />
-
     </LinearLayout>
 
 </RelativeLayout>
