@@ -136,6 +136,16 @@ public class AccountInformation extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.saveSettings:
+			
+			if (lastname.getText().length()==0)			
+			lastname.setError("Field cannot be left blank.");
+			else if (firstname.getText().length()==0)			
+				firstname.setError("Field cannot be left blank.");
+			else if (email.getText().length()==0)			
+				email.setError("Field cannot be left blank.");
+			else if (password.getText().length()==0)			
+				password.setError("Field cannot be left blank.");
+			
 			Toast.makeText(getApplicationContext(), "Account settings saved!",
 					Toast.LENGTH_SHORT).show();
 		/*	FIRSTNAME = firstname.getText().toString();
