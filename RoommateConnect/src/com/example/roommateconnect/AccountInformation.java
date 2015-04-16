@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Identity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -35,8 +36,10 @@ public class AccountInformation extends Activity implements OnClickListener,
 	private static final String tag = "Account Information";
 	private Button saveSettings;
 	private Button deleteAccount;
+	private EditText studentID;
 	private EditText firstname;
 	private EditText lastname;
+	private EditText phone;
 	private EditText email;
 	private EditText password;
 	private Spinner classMenu;
@@ -48,8 +51,10 @@ public class AccountInformation extends Activity implements OnClickListener,
 	private EditText quantity;
 
 	// Create Data
+	private String STUDENTID;
 	private String FIRSTNAME;
 	private String LASTNAME;
+	private String PHONE;
 	private String EMAIL;
 	private String PASSWORD;
 	private String CLASSYEAR;
@@ -68,8 +73,10 @@ public class AccountInformation extends Activity implements OnClickListener,
 		deleteAccount = (Button) findViewById(R.id.deleteAccount);
 		deleteAccount.setOnClickListener(this);
 
+		studentID = (EditText)findViewById(R.id.EnterID);
 		firstname = (EditText) findViewById(R.id.EnterFirstName);
 		lastname = (EditText) findViewById(R.id.EnterLastName);
+		phone = (EditText)findViewById(R.id.EnterPhoneNumber);
 		email = (EditText) findViewById(R.id.EnterEmail);
 		password = (EditText) findViewById(R.id.EnterPassword);
 		classMenu = (Spinner) findViewById(R.id.ClassSpinner);
@@ -138,12 +145,6 @@ public class AccountInformation extends Activity implements OnClickListener,
 		case R.id.saveSettings:
 			Toast.makeText(getApplicationContext(), "Account settings saved!",
 					Toast.LENGTH_SHORT).show();
-		/*	FIRSTNAME = firstname.getText().toString();
-			LASTNAME = lastname.getText().toString();
-			EMAIL = email.getText().toString();
-			PASSWORD = password.getText().toString();
-			STRING_QUANTITY = quantity.getText().toString();
-			QUANTITY = Integer.parseInt(STRING_QUANTITY);*/
 			insertIntoTable();
 			Toast.makeText(getApplicationContext(), "Data added to database", Toast.LENGTH_SHORT).show();
 			Intent s = new Intent(AccountInformation.this, AccountHome.class);
@@ -158,20 +159,7 @@ public class AccountInformation extends Activity implements OnClickListener,
 		}
 
 	}
-
-	// Create Table if it doesn't exist
-	public void deleteTable() {
-		try {
-			db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
-			db.execSQL("DROP MY_TABLE");
-			Toast.makeText(getApplicationContext(), Table + "has been deleted", Toast.LENGTH_LONG).show();
-			db.close();
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "Error in creating table",
-					Toast.LENGTH_LONG);
-		}
-	}
-	
+	// Get values from Database
 	public void createTable() {
 		try {
 			db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
@@ -179,18 +167,19 @@ public class AccountInformation extends Activity implements OnClickListener,
 					+ " (ID INTEGER PRIMARY KEY, NAME TEXT, PLACE TEXT);");
 			db.close();
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "Error in creating table",
-					Toast.LENGTH_LONG);
+			Toast.makeText(getApplicationContext(), "Error in creating table", Toast.LENGTH_SHORT).show();
 		}
 	}
-
+	
 	// Insert Data into Database
 	public void insertIntoTable() {
 		try {
 			db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
 			ContentValues values = new ContentValues();
-			values.put("First Name", firstname.getText().toString());
-			values.put("Last Name", lastname.getText().toString());
+			values.put("StudentID", studentID.getText().toString());
+			values.put("FirstName", firstname.getText().toString());
+			values.put("LastName", lastname.getText().toString());
+			values.put("PhoneNumber", phone.getText().toString());
 			values.put("Email", email.getText().toString());
 			values.put("Password", password.getText().toString());
 			if (SEX.equals("Female")){
@@ -199,13 +188,14 @@ public class AccountInformation extends Activity implements OnClickListener,
 			else if (SEX.equals("Male")){
 				values.put("Sex", "Male");
 			}
-			values.put("Class Level", classCode.getText().toString());
-			values.put("Looking for", lookingFor.getText().toString());
-			values.put("Group Amount", quantity.getText().toString());
-			db.insert("Account", null, values);
+			values.put("ClassLevel", CLASSYEAR);
+			values.put("Lookingfor", LOOKINGFOR);
+			values.put("GroupAmount", quantity.getText().toString());
+		//	db.update(Table, null, values);
+		//	Toast.makeText(getApplicationContext(), "Data added to database", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(),
-					"Error in inserting into table", Toast.LENGTH_LONG);
+					"Error in inserting into table", Toast.LENGTH_LONG).show();
 		}
 	}
 }

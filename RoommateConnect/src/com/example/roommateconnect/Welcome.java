@@ -19,7 +19,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Welcome extends Activity implements OnClickListener {
 	
-	private LinearLayout Linear;
+	SQLiteDatabase db;
+	LinearLayout Linear;
+	private static String DBName = "MATCHES.db";
+	private static String Table = "MY_TABLE";
 	private Button LoginButton;
 	private Button CreateAccountButton;
 	private static final String tag = "Welcome page";
@@ -45,18 +48,27 @@ public class Welcome extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.LoginButton:
 			Log.i(tag, "Login Button Clicked");
-			Intent wL = new Intent();
-			wL.setComponent(new ComponentName("com.example.roommateconnect",
-					"com.example.roommateconnect.LoginPage"));
+			Intent wL = new Intent(Welcome.this, LoginPage.class);
 			startActivity(wL);
 			break;
 		case R.id.CreateAccountButton:
 			Log.i(tag, "Create acount Button Clicked");
-			Intent wA = new Intent();
-			wA.setComponent(new ComponentName("com.example.roommateconnect",
-					"com.example.roommateconnect.AccountInformation"));
+			Intent wA = new Intent(Welcome.this, CreateAccount.class);
 			startActivity(wA);
 			break;
 		}
+	}
+	
+	// Create Table if it doesn't exist
+	public void createTable(){
+		 try{
+		        db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE,null);			    			        
+		        db.execSQL("CREATE TABLE IF  NOT EXISTS "+ Table +" (StudentID TEXT PRIMARY KEY, FirstName TEXT, LastName TEXT, "
+		       		+ "PhoneNumber TEXT, Email TEXT, Password TEXT, Sex TEXT, ClassLevel TEXT, LookingFor TEXT, GroupAmount INTEGER );");
+		       Toast.makeText(getApplicationContext(), "MY_TABLE has been created", Toast.LENGTH_LONG).show();
+		        db.close();
+		        }catch(Exception e){
+		            Toast.makeText(getApplicationContext(), "Error in creating table", Toast.LENGTH_LONG).show();	
+	    }
 	}
 }
