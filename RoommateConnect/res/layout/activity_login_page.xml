@@ -25,7 +25,8 @@
             android:id="@+id/EnterUsernameLP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:text="thompso_emil@bentley.edu" />
 
         <TextView
             android:id="@+id/PasswordLP"
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="numberPassword"
-            android:text="kristina" />
+            android:text="emily" />
 
         <Button
             android:id="@+id/loginButtonLP"

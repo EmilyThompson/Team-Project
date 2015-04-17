@@ -1,8 +1,6 @@
 package com.example.roommateconnect;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,60 +16,87 @@ import android.widget.Toast;
 
 public class LoginPage extends Activity implements OnClickListener {
 
-	SQLiteDatabase db;
-	LinearLayout Linear;
-	private static String DBName = "MATCHES.db";
-	private static String Table = "MY_TABLE";
-	
-	private Button login;
-	private EditText username;
-	private EditText password;
-	
+	// Create Tag
 	private static final String tag = "LoginPage";
 
+	// Create Database References
+	SQLiteDatabase db;
+	private static String DBName = "MATCHES.db";
+	private static String Table = "MY_TABLE";
+
+	// Create Button
+	private Button login;
+
+	// Create EditTexts
+	private EditText username;
+	private EditText password;
+
+	// Create Strings
+	String user;
+	String pass;
+
+	// onCreate
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login_page);
 
-		login = (Button) findViewById(R.id.loginButtonLP);
-		login.setOnClickListener(this);
-
+		// Link EditTexts
 		username = (EditText) findViewById(R.id.EnterUsernameLP);
 		password = (EditText) findViewById(R.id.EnterPasswordLP);
+
+		// Link Button
+		login = (Button) findViewById(R.id.loginButtonLP);
+
+		// Set Button Listener
+		login.setOnClickListener(this);
 	}
 
+	// Button Listener
 	@Override
 	public void onClick(View v) {
+		db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
 
-		String user = username.getText().toString();
-		Log.i(tag, "Username is " + user);
-		String pass = password.getText().toString();
-		Log.i(tag, "Password is " + pass);
-		
-		if(doesAccountExist(user, pass)){
-			
-		Intent it = new Intent();
-		it.setComponent(new ComponentName("com.example.roommateconnect",
-				"com.example.roommateconnect.AccountHome"));
-		startActivity(it);
-	}
-		else {
-			Toast.makeText(getApplicationContext(), "Account does not exist", Toast.LENGTH_SHORT).show();
+		user = username.getText().toString();
+		Log.i(tag, "Username is: " + user);
+
+		pass = password.getText().toString();
+		Log.i(tag, "Password is: " + pass);
+
+		String sending_user_1 = user;
+
+		if (doesAccountExist(user, pass)) {
+			Log.i(tag, "doesAccountExist(user,pass) is true");
+
+			Intent it = new Intent(LoginPage.this, AccountHome.class);
+			it.putExtra("USER1", sending_user_1);
+			startActivity(it);
+		} else {
+			Log.i(tag, "doesAccountExist(user,pass) is false");
+			Toast.makeText(getApplicationContext(),
+					"Username or Password is incorrect", Toast.LENGTH_SHORT)
+					.show();
 		}
+
 	}
 
-	// Check Username and Password to see if account exists
-	public boolean doesAccountExist(String u, String p){
+	// doesAccountExist Method
+	public boolean doesAccountExist(String u, String p) {
 		boolean exist = false;
-		try{
-		db.execSQL("SELECT Email, Username FROM " + Table + "WHERE Email=" + u + "AND WHERE Password=" + p);
-		exist = true;
-		}
-		catch (Exception e){
+		try {
+			Cursor cursor = db
+					.rawQuery("SELECT Email, Password FROM " + Table
+							+ " WHERE Email='" + u + "' AND Password='" + p
+							+ "'", null);
+			Log.i(tag, "Account exists");
+
+			if (cursor.getCount() == 1) {
+				exist = true;
+			}
+		} catch (Exception e) {
 			Log.i(tag, "Could not find account");
 			exist = false;
 		}
-		return exist;		
+		return exist;
 	}
 }
