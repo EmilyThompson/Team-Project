@@ -19,7 +19,8 @@ public class AccountHome extends Activity implements OnClickListener {
 	private Button myMatches;
 
 	// Create String for Intent Extra
-	String sending_user_2;
+	String accountInformation;
+	String sending_user_matches;
 
 	// onCreate
 	@Override
@@ -33,7 +34,9 @@ public class AccountHome extends Activity implements OnClickListener {
 		myMatches.setOnClickListener(this);
 
 		Intent intent = getIntent();
-		sending_user_2 = intent.getStringExtra("USER1");
+		accountInformation = intent.getStringExtra("USER1");
+		Log.i(tag, "Email received by Account Home equals: " + accountInformation);
+		sending_user_matches = accountInformation;
 	}
 
 	// Button Listener
@@ -41,13 +44,16 @@ public class AccountHome extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.accountSettings:
+			Log.i(tag, "Account Settings button clicked");
 			Intent kk = new Intent(AccountHome.this, AccountInformation.class);
-			kk.putExtra("USER2", sending_user_2);
-			// kk.setComponent(new ComponentName("com.example.roommateconnect",
-			// "com.example.roomateconnect.AccountInformation"));
+			kk.putExtra("USER_ACCOUNT", accountInformation);
 			startActivity(kk);
 			break;
 		case R.id.myMatches:
+			Log.i(tag, "My Matches button clicked");
+			Intent bb = new Intent(AccountHome.this, Matches.class);
+			bb.putExtra("USER_MATCHES", sending_user_matches);
+			startActivity(bb);
 			Log.i(tag, "My Matches Pressed!");
 			break;
 		}

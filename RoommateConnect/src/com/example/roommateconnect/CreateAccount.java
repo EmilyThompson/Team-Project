@@ -238,6 +238,7 @@ public class CreateAccount extends Activity implements OnClickListener,
 						"Account has been created!", Toast.LENGTH_SHORT).show();
 				insertIntoTable();
 				Intent s = new Intent(CreateAccount.this, AccountHome.class);
+				s.putExtra("USER1", email.getText().toString());
 				startActivity(s);
 			}
 			break;

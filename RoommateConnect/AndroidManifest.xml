@@ -43,5 +43,8 @@
             android:label="@string/title_activity_account_home" >
         </activity>
     </application>
+    
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

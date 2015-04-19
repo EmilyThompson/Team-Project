@@ -55,6 +55,7 @@ public class LoginPage extends Activity implements OnClickListener {
 	// Button Listener
 	@Override
 	public void onClick(View v) {
+		Log.i(tag, "Login Button Clicked");
 		db = openOrCreateDatabase(DBName, Context.MODE_PRIVATE, null);
 
 		user = username.getText().toString();
@@ -70,6 +71,7 @@ public class LoginPage extends Activity implements OnClickListener {
 
 			Intent it = new Intent(LoginPage.this, AccountHome.class);
 			it.putExtra("USER1", sending_user_1);
+			Log.i(tag, "Email sent to Account Home equals " + sending_user_1);
 			startActivity(it);
 		} else {
 			Log.i(tag, "doesAccountExist(user,pass) is false");

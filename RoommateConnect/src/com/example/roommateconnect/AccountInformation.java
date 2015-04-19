@@ -41,7 +41,7 @@ public class AccountInformation extends Activity implements OnClickListener,
 	private Cursor curse2;
 
 	// Create String for Intent Extra
-	String receiving_user;
+	String receiving_user_accountInformation;
 
 	// Create EditTexts
 	private EditText studentID;
@@ -144,10 +144,10 @@ public class AccountInformation extends Activity implements OnClickListener,
 
 		// Get & Store Message from Intent
 		Intent intent = getIntent();
-		receiving_user = intent.getStringExtra("USER2");
+		receiving_user_accountInformation = intent.getStringExtra("USER_ACCOUNT");
 
 		// Call methods
-		loadInformation(receiving_user);
+		loadInformation(receiving_user_accountInformation);
 		setInformation();
 	}
 
