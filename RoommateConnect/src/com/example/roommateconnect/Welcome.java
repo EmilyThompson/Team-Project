@@ -1,9 +1,13 @@
 package com.example.roommateconnect;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,7 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Welcome extends Activity implements OnClickListener {
+public class Welcome extends Activity implements OnClickListener, OnInitListener {
 
 	// Create Tag
 	private static final String tag = "Welcome page";
@@ -24,6 +28,9 @@ public class Welcome extends Activity implements OnClickListener {
 	// Create Buttons
 	private Button LoginButton;
 	private Button CreateAccountButton;
+	
+	//Text to speech
+	private TextToSpeech speaker;
 
 	// OnCreate
 	@Override
@@ -40,7 +47,40 @@ public class Welcome extends Activity implements OnClickListener {
 		CreateAccountButton.setOnClickListener(this);
 
 		createTable();
+		
+        speaker = new TextToSpeech(this, this);
+
 	}
+	
+	public void speak(String output){
+    	speaker.speak(output, TextToSpeech.QUEUE_FLUSH, null);
+    }
+    
+    // Implements TextToSpeech.OnInitListener.
+    public void onInit(int status) {
+        // status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
+        if (status == TextToSpeech.SUCCESS) {
+            // Set preferred language to US english.
+            // If a language is not be available, the result will indicate it.
+            int result = speaker.setLanguage(Locale.US);
+           
+           //  int result = speaker.setLanguage(Locale.FRANCE);
+            if (result == TextToSpeech.LANG_MISSING_DATA ||
+                result == TextToSpeech.LANG_NOT_SUPPORTED) {
+               // Language data is missing or the language is not supported.
+                Log.e(tag, "Language is not available.");
+            } else {
+                  // The TTS engine has been successfully initialized
+            	speak("Welcome!");
+            	Log.i(tag, "TTS Initialization successful.");
+            	Log.i(tag, "Speech: Welcome.");
+            }
+        } else {
+            // Initialization failed.
+            Log.e(tag, "Could not initialize TextToSpeech.");
+        }
+    }
+
 
 	// Button Listener
 	@Override

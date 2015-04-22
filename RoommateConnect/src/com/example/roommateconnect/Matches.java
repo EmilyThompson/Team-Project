@@ -82,7 +82,7 @@ public class Matches extends ListActivity {
 		aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Matches);
 		
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		getListView().setSelector(R.color.Red);
+		//getListView().setSelector(R.color.Red); //This isnt working
 		VIEW = new View(this);
 		setListAdapter(aa);
 	}

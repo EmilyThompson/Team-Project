@@ -1,5 +1,7 @@
 package com.example.roommateconnect;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +9,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateAccount extends Activity implements OnClickListener,
-		OnItemSelectedListener, OnCheckedChangeListener {
+		OnItemSelectedListener, OnCheckedChangeListener, OnInitListener{
 
 	// Create Tag
 	private static final String tag = "CreateAccount";
@@ -72,6 +76,9 @@ public class CreateAccount extends Activity implements OnClickListener,
 	private String CLASSYEAR;
 	private String LOOKINGFOR;
 	private String SEX;
+	
+	private TextToSpeech speaker;
+
 
 	// onCreate
 	@Override
@@ -124,7 +131,53 @@ public class CreateAccount extends Activity implements OnClickListener,
 				android.R.layout.simple_spinner_item, lookingForOptions);
 		mm.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		lookingForMenu.setAdapter(mm);
+		
+		//Initialize Text to Speech engine (context, listener object)
+        speaker = new TextToSpeech(this, this);
+
 	}
+	
+
+	//speaks the contents of output
+    public void speak(String output){
+    	speaker.speak(output, TextToSpeech.QUEUE_FLUSH, null);
+    }
+    
+    // Implements TextToSpeech.OnInitListener.
+    public void onInit(int status) {
+        // status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
+        if (status == TextToSpeech.SUCCESS) {
+            // Set preferred language to US english.
+            // If a language is not be available, the result will indicate it.
+            int result = speaker.setLanguage(Locale.US);
+           
+           //  int result = speaker.setLanguage(Locale.FRANCE);
+            if (result == TextToSpeech.LANG_MISSING_DATA ||
+                result == TextToSpeech.LANG_NOT_SUPPORTED) {
+               // Language data is missing or the language is not supported.
+                Log.e(tag, "Language is not available.");
+            } else {
+                  // The TTS engine has been successfully initialized
+            	speak("Please enter account info");
+            	Log.i(tag, "TTS Initialization successful.");
+            }
+        } else {
+            // Initialization failed.
+            Log.e(tag, "Could not initialize TextToSpeech.");
+        }
+    }
+    
+    // on destroy
+    public void onDestroy(){
+    	
+    	// shut down TTS engine
+    	if(speaker != null){
+    		speaker.stop();
+    		speaker.shutdown();
+    	}
+    	super.onDestroy();
+    }
+    
 
 	// Radio Button Listener
 	@Override
