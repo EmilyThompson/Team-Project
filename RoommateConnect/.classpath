@@ -5,6 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="/Users/chrisvalle/Documents/CS480/Jars/com.questoid.sqlitebrowser_1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/dropins/com.questoid.sqlitemanager_1.0.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

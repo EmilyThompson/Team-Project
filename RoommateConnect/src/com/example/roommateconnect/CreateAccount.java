@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -144,7 +143,8 @@ public class CreateAccount extends Activity implements OnClickListener,
     }
     
     // Implements TextToSpeech.OnInitListener.
-    public void onInit(int status) {
+    @Override
+	public void onInit(int status) {
         // status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
         if (status == TextToSpeech.SUCCESS) {
             // Set preferred language to US english.
@@ -168,7 +168,8 @@ public class CreateAccount extends Activity implements OnClickListener,
     }
     
     // on destroy
-    public void onDestroy(){
+    @Override
+	public void onDestroy(){
     	
     	// shut down TTS engine
     	if(speaker != null){

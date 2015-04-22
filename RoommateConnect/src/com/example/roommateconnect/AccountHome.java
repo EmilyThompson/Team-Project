@@ -3,7 +3,6 @@ package com.example.roommateconnect;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -55,7 +54,8 @@ public class AccountHome extends Activity implements OnClickListener, OnInitList
 	    }
 	    
 	    // Implements TextToSpeech.OnInitListener.
-	    public void onInit(int status) {
+	    @Override
+		public void onInit(int status) {
 	        // status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
 	        if (status == TextToSpeech.SUCCESS) {
 	            // Set preferred language to US english.

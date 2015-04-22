@@ -11,7 +11,10 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -31,6 +34,9 @@ public class Welcome extends Activity implements OnClickListener, OnInitListener
 	
 	//Text to speech
 	private TextToSpeech speaker;
+	
+	// Image and Animation
+	private ImageView image;
 
 	// OnCreate
 	@Override
@@ -46,10 +52,36 @@ public class Welcome extends Activity implements OnClickListener, OnInitListener
 		LoginButton.setOnClickListener(this);
 		CreateAccountButton.setOnClickListener(this);
 
+		// Link Image and Create Animation
+		image = (ImageView)findViewById(R.id.image);
+		image.setImageResource(R.drawable.image1);
 		createTable();
+		
+		Animation an = AnimationUtils.loadAnimation(this, R.anim.simple_animation);
+		an.setAnimationListener(new MyAnimationListener());
+		image.startAnimation(an);
 		
         speaker = new TextToSpeech(this, this);
 
+	}
+	class MyAnimationListener implements Animation.AnimationListener{
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			// do nothing
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			// do nothing
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// do nothing
+			
+		}
+		
 	}
 	
 	public void speak(String output){
@@ -57,7 +89,8 @@ public class Welcome extends Activity implements OnClickListener, OnInitListener
     }
     
     // Implements TextToSpeech.OnInitListener.
-    public void onInit(int status) {
+    @Override
+	public void onInit(int status) {
         // status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
         if (status == TextToSpeech.SUCCESS) {
             // Set preferred language to US english.

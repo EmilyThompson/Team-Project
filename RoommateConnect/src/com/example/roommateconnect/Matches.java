@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.example.roommateconnect.R;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +11,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.Font;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import android.R.color;
 
 public class Matches extends ListActivity {
 	// Create tag
@@ -81,8 +78,9 @@ public class Matches extends ListActivity {
 		getMatches(match);
 		aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Matches);
 		
-		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		//getListView().setSelector(R.color.Red); //This isnt working
+		getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+		getListView().setSelector(R.color.Green);
+		
 		VIEW = new View(this);
 		setListAdapter(aa);
 	}
