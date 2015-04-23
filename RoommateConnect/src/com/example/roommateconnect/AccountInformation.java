@@ -139,7 +139,8 @@ public class AccountInformation extends Activity implements OnClickListener,
 
 		// Get & Store Message from Intent
 		Intent intent = getIntent();
-		receiving_user_accountInformation = intent.getStringExtra("USER_ACCOUNT");
+		receiving_user_accountInformation = intent
+				.getStringExtra("USER_ACCOUNT");
 
 		// Call methods
 		loadInformation(receiving_user_accountInformation);
@@ -314,8 +315,6 @@ public class AccountInformation extends Activity implements OnClickListener,
 				Log.i(tag, "Gender error");
 			} else if (error == false) {
 				Log.i(tag, "No Errors!");
-				Toast.makeText(getApplicationContext(),
-						"Account has been created!", Toast.LENGTH_SHORT).show();
 				updateTable();
 				Intent s = new Intent(AccountInformation.this,
 						AccountHome.class);

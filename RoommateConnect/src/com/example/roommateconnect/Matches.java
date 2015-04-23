@@ -3,7 +3,6 @@ package com.example.roommateconnect;
 import java.util.ArrayList;
 
 import com.example.roommateconnect.R;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,39 +27,29 @@ public class Matches extends ListActivity {
 	SQLiteDatabase db;
 	private static String DBName = "MATCHES.db";
 	private static String Table = "MY_TABLE";
-	private Cursor curse1;
-	private Cursor curse2;
 
 	// Create Imported Data Strings
 	private String LOOKINGFOR;
 	private String QUANTITY;
 
-	// Create Button
-	private// Create String for Intent Extra
-	String matches;
-
 	// Create Strings
 	private String oppLookingFor;
 
 	// Create Match Strings
-	private String matchID;
 	private String matchFirstName;
 	private String matchLastName;
 	private String matchPhone;
 	private String matchEmail;
-	private String matchPassword;
 	private String matchSex;
 	private String matchClassYear;
-	private String matchLookingFor;
-	private String matchQuantity;
-	
+
 	// Create Array
 	ArrayList<String> Matches = new ArrayList<String>();
 	private ArrayAdapter<String> aa;
-	String [] title = {"Name", "Info"};
-	
+	String[] title = { "Name", "Info" };
+
 	// Create View
-	final int PICK1_Email = Menu.FIRST + 1;
+	// final int PICK1_Email = Menu.FIRST + 1;
 	final int PICK2_Call = Menu.FIRST + 2;
 	final int PICK3_Text = Menu.FIRST + 3;
 	View VIEW;
@@ -69,18 +58,19 @@ public class Matches extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_matches);
-		
+
 		// Get & Store Message from Intent
 		Intent intent = getIntent();
 		String match = intent.getStringExtra("USER_MATCHES");
 		Log.i(tag, "Matches intent equals " + match);
 
 		getMatches(match);
-		aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Matches);
-		
+		aa = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, Matches);
+
 		getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		getListView().setSelector(R.color.Green);
-		
+
 		VIEW = new View(this);
 		setListAdapter(aa);
 	}
@@ -142,11 +132,10 @@ public class Matches extends ListActivity {
 						+ "...ClassLevel= " + matchClassYear);
 				position = cursor2.getPosition();
 				Log.i(tag, "At end of loop cursor position is " + position);
-				
-				
-				String info = matchFirstName + " " + matchLastName + 
-						"\n Sex: " + matchSex + "     Class: " + matchClassYear;
-				Matches.add(info);		
+
+				String info = matchFirstName + " " + matchLastName + "\n Sex: "
+						+ matchSex + "     Class: " + matchClassYear;
+				Matches.add(info);
 				if (cursor2.getPosition() == count - 1)
 					break;
 			}
@@ -154,45 +143,38 @@ public class Matches extends ListActivity {
 			Log.i(tag, "Error getting matches.");
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-			super.onCreateOptionsMenu(menu);
-			MenuItem item1 = menu.add(0, PICK1_Email, Menu.NONE, "Email Match");
-			MenuItem item2 = menu.add(0, PICK2_Call, Menu.NONE, "Call Match");
-			MenuItem item3 = menu.add(0, PICK3_Text, Menu.NONE, "Text Match");
-			
-			return true;
+		super.onCreateOptionsMenu(menu);
+		MenuItem item2 = menu.add(0, PICK2_Call, Menu.NONE, "Call Match");
+		MenuItem item3 = menu.add(0, PICK3_Text, Menu.NONE, "Text Match");
+
+		return true;
 	}
+
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {		
-	    
-	    int itemID = item.getItemId();
-	    
-	    switch (itemID) {
-	    case PICK1_Email : 
-	    	Toast.makeText(this, "Emailing Match", Toast.LENGTH_SHORT).show();
-	    	Log.i(tag, "Emailing Match");
-	    	Intent e = new Intent(Intent.ACTION_SENDTO);
-	    	e.putExtra(Intent.EXTRA_EMAIL, matchEmail);
-	    	e.putExtra(Intent.EXTRA_SUBJECT, "Roommate Connect Inquiry");
-	    	startActivity(e);
-	      	break;
-	    case PICK2_Call : 
-	    	Toast.makeText(this, "Calling Match", Toast.LENGTH_SHORT).show();
-	    	Log.i(tag, "Calling Match");
-	    	Uri dUri = Uri.parse("tel:"+matchPhone);
-	    	Intent c = new Intent(Intent.ACTION_CALL, dUri);
-	    	startActivity(c);
-	    	break;
-	    case PICK3_Text : 
-	    	Toast.makeText(this, "Texting Match", Toast.LENGTH_SHORT).show();
-	    	Log.i(tag, "Texting Match");
-	    	Intent t = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", matchPhone, null));
-	    	startActivity(t);
-	    	break;
-	    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		int itemID = item.getItemId();
+
+		switch (itemID) {
+		case PICK2_Call:
+			Toast.makeText(this, "Calling Match", Toast.LENGTH_SHORT).show();
+			Log.i(tag, "Calling Match");
+			Uri dUri = Uri.parse("tel:" + matchPhone);
+			Intent c = new Intent(Intent.ACTION_CALL, dUri);
+			startActivity(c);
+			break;
+		case PICK3_Text:
+			Toast.makeText(this, "Texting Match", Toast.LENGTH_SHORT).show();
+			Log.i(tag, "Texting Match");
+			Intent t = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",
+					matchPhone, null));
+			startActivity(t);
+			break;
+		}
 		return false;
 	}
 }

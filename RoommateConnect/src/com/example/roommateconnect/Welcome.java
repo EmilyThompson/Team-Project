@@ -15,10 +15,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Welcome extends Activity implements OnClickListener, OnInitListener {
+public class Welcome extends Activity implements OnClickListener,
+		OnInitListener {
 
 	// Create Tag
 	private static final String tag = "Welcome page";
@@ -31,10 +31,10 @@ public class Welcome extends Activity implements OnClickListener, OnInitListener
 	// Create Buttons
 	private Button LoginButton;
 	private Button CreateAccountButton;
-	
-	//Text to speech
+
+	// Text to speech
 	private TextToSpeech speaker;
-	
+
 	// Image and Animation
 	private ImageView image;
 
@@ -53,18 +53,20 @@ public class Welcome extends Activity implements OnClickListener, OnInitListener
 		CreateAccountButton.setOnClickListener(this);
 
 		// Link Image and Create Animation
-		image = (ImageView)findViewById(R.id.image);
+		image = (ImageView) findViewById(R.id.image);
 		image.setImageResource(R.drawable.image1);
 		createTable();
-		
-		Animation an = AnimationUtils.loadAnimation(this, R.anim.simple_animation);
+
+		Animation an = AnimationUtils.loadAnimation(this,
+				R.anim.simple_animation);
 		an.setAnimationListener(new MyAnimationListener());
 		image.startAnimation(an);
-		
-        speaker = new TextToSpeech(this, this);
+
+		speaker = new TextToSpeech(this, this);
 
 	}
-	class MyAnimationListener implements Animation.AnimationListener{
+
+	class MyAnimationListener implements Animation.AnimationListener {
 
 		@Override
 		public void onAnimationEnd(Animation animation) {
@@ -79,41 +81,40 @@ public class Welcome extends Activity implements OnClickListener, OnInitListener
 		@Override
 		public void onAnimationStart(Animation animation) {
 			// do nothing
-			
-		}
-		
-	}
-	
-	public void speak(String output){
-    	speaker.speak(output, TextToSpeech.QUEUE_FLUSH, null);
-    }
-    
-    // Implements TextToSpeech.OnInitListener.
-    @Override
-	public void onInit(int status) {
-        // status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
-        if (status == TextToSpeech.SUCCESS) {
-            // Set preferred language to US english.
-            // If a language is not be available, the result will indicate it.
-            int result = speaker.setLanguage(Locale.US);
-           
-           //  int result = speaker.setLanguage(Locale.FRANCE);
-            if (result == TextToSpeech.LANG_MISSING_DATA ||
-                result == TextToSpeech.LANG_NOT_SUPPORTED) {
-               // Language data is missing or the language is not supported.
-                Log.e(tag, "Language is not available.");
-            } else {
-                  // The TTS engine has been successfully initialized
-            	speak("Welcome!");
-            	Log.i(tag, "TTS Initialization successful.");
-            	Log.i(tag, "Speech: Welcome.");
-            }
-        } else {
-            // Initialization failed.
-            Log.e(tag, "Could not initialize TextToSpeech.");
-        }
-    }
 
+		}
+
+	}
+
+	public void speak(String output) {
+		speaker.speak(output, TextToSpeech.QUEUE_FLUSH, null);
+	}
+
+	// Implements TextToSpeech.OnInitListener.
+	@Override
+	public void onInit(int status) {
+		// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
+		if (status == TextToSpeech.SUCCESS) {
+			// Set preferred language to US english.
+			// If a language is not be available, the result will indicate it.
+			int result = speaker.setLanguage(Locale.US);
+
+			// int result = speaker.setLanguage(Locale.FRANCE);
+			if (result == TextToSpeech.LANG_MISSING_DATA
+					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
+				// Language data is missing or the language is not supported.
+				Log.e(tag, "Language is not available.");
+			} else {
+				// The TTS engine has been successfully initialized
+				speak("Welcome!");
+				Log.i(tag, "TTS Initialization successful.");
+				Log.i(tag, "Speech: Welcome.");
+			}
+		} else {
+			// Initialization failed.
+			Log.e(tag, "Could not initialize TextToSpeech.");
+		}
+	}
 
 	// Button Listener
 	@Override
